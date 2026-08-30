@@ -1,6 +1,7 @@
 from pathlib import Path
 import html
 import json
+import os
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -8,6 +9,22 @@ DOMAIN = "https://gardenofwitches.shop"
 UPDATED = "2026-08-30"
 UPDATED_DISPLAY = "30 Aug 2026"
 OG_IMAGE = f"{DOMAIN}/assets/media/official-header.jpg"
+GA_MEASUREMENT_ID = os.environ.get("GA_MEASUREMENT_ID", "").strip()
+GOOGLE_SITE_VERIFICATION = os.environ.get("GOOGLE_SITE_VERIFICATION", "").strip()
+
+if GA_MEASUREMENT_ID and not re.fullmatch(r"G-[A-Z0-9]+", GA_MEASUREMENT_ID):
+    raise ValueError("GA_MEASUREMENT_ID must look like G-XXXXXXXXXX")
+
+GSC_META = (
+    f'<meta name="google-site-verification" content="{html.escape(GOOGLE_SITE_VERIFICATION)}">'
+    if GOOGLE_SITE_VERIFICATION else ""
+)
+ANALYTICS_HEAD = ""
+CONSENT_BANNER = ""
+if GA_MEASUREMENT_ID:
+    ANALYTICS_HEAD = f'''<script>window.GA_MEASUREMENT_ID='{GA_MEASUREMENT_ID}';window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}
+gtag('consent','default',{{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'}});</script>'''
+    CONSENT_BANNER = '''<section class="analytics-consent" aria-label="Analytics preference" hidden><p><strong>Optional analytics</strong><br>Help us understand which beginner guides are useful. Google Analytics stays off unless you accept.</p><div><button type="button" data-consent="denied">No thanks</button><button type="button" class="accept" data-consent="granted">Allow analytics</button></div></section>'''
 
 NAV = [
     ("Beginner", "/guides/getting-started.html"),
@@ -60,17 +77,17 @@ def page(path, seo_title, description, body, *, schema_type="Article", faqs=None
         for label, url in crumbs) + '</nav>'
     doc = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{html.escape(full_title)}</title><meta name="description" content="{html.escape(description)}">{robots}
+  <title>{html.escape(full_title)}</title><meta name="description" content="{html.escape(description)}">{robots}{GSC_META}
   <link rel="canonical" href="{canonical}"><meta property="og:title" content="{html.escape(full_title)}">
   <meta property="og:description" content="{html.escape(description)}"><meta property="og:type" content="article"><meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{image_url}"><meta property="og:image:alt" content="Official Garden of Witches game media from Team Tapas">
   <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#15101e">
   <link rel="icon" href="{root}assets/mark.svg" type="image/svg+xml"><link rel="manifest" href="{root}site.webmanifest"><link rel="stylesheet" href="{root}assets/style.css">
-  {''.join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)}<script src="{root}assets/site.js" defer></script>
+  {''.join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)}{ANALYTICS_HEAD}<script src="{root}assets/site.js" defer></script>
 </head><body><a class="skip" href="#main">Skip to content</a><header class="site-header">
   <a class="brand" href="{root}index.html"><img src="{root}assets/mark.svg" alt="" width="38" height="38"><span>Garden of Witches <b>Wiki</b></span></a>
   <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" aria-label="Primary">{nav}</nav></header>
-  <main id="main">{breadcrumb_html}{body}</main><footer><div><strong>Garden of Witches Wiki</strong><p>Independent player reference for the 1.0 release. Not affiliated with Team Tapas.</p></div><div><a href="{root}sources.html">Sources &amp; media credits</a><a href="{root}privacy.html">Privacy</a><span>Evidence: {html.escape(source_state)} · updated {UPDATED_DISPLAY}</span></div></footer></body></html>'''
+  <main id="main">{breadcrumb_html}{body}</main><footer><div><strong>Garden of Witches Wiki</strong><p>Independent player reference for the 1.0 release. Not affiliated with Team Tapas.</p></div><div><a href="{root}sources.html">Sources &amp; media credits</a><a href="{root}privacy.html">Privacy</a><span>Evidence: {html.escape(source_state)} · updated {UPDATED_DISPLAY}</span></div></footer>{CONSENT_BANNER}</body></html>'''
     dest = ROOT / (path or "index.html")
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(doc, encoding="utf-8")
@@ -225,7 +242,8 @@ walkthrough = inject_before_faq(walkthrough, '''<h2 id="route-build">Build conti
 challenge = inject_before_faq(challenge, '''<h2 id="challenge-test">First Challenge Mode test</h2><p>Begin with the stable story-clear loadout rather than changing every Armory slot. Select a manageable challenge setup, run a repeatable combat window and observe where the build breaks. Use the real-time DPS display, clear time and damage taken together. Then change one component or one difficulty choice.</p><p>For Broken Scissors, measure how often the mode forces contact breaks before full Sharpness. For Magic Scissors, measure how often increased pressure interrupts charge. The answer determines whether the next change should add damage, movement, control or recovery.</p><h2 id="challenge-record">Record the endgame state</h2><ul><li>Game version and save cleared through Epilogue 3.</li><li>Visible Challenge Mode options selected before leaving the house.</li><li>Armory loadout and current tooltips.</li><li>Chapter/encounter, DPS window, clear time and damage taken.</li><li>One changed variable for the next attempt.</li></ul><p>This record turns a strong run into reusable player evidence. Without it, a high number cannot distinguish build power from an easier modifier, different encounter or lucky reward sequence.</p>''')
 
 sources = '''<header class="page-hero"><p class="eyebrow">Evidence and media desk</p><h1>Sources, version labels and game media</h1><p>Every mechanics claim identifies whether it comes from final 1.0 notes, an official preview or repeatable player testing.</p></header><article class="article-layout"><div class="prose"><h2>Primary sources</h2><ul><li><a href="https://steamcommunity.com/app/2530470/allnews/" rel="nofollow noopener">Official Team Tapas Steam news</a> — 1.0 launch notes and pre-launch examples.</li><li><a href="https://store.steampowered.com/app/2530470/Garden_of_Witches/" rel="nofollow noopener">Official Garden of Witches Steam page</a> — store facts, screenshots and media.</li></ul><h2>Evidence labels</h2><dl><dt>Official 1.0</dt><dd>Confirmed in the Aug 28 full-release notes.</dd><dt>Official preview</dt><dd>Published by Team Tapas before launch; detailed values may have changed.</dd><dt>Player-tested</dt><dd>Requires a named version, loadout, chapter and repeatable comparison.</dd></dl><h2>Media usage</h2><p>Game screenshots, icons, animations and key art were downloaded from official Steam or Team Tapas announcements. They remain © Team Tapas, Ltd. Files are served locally; retrieval URLs and SHA-256 hashes are recorded in <code>assets/media/source-manifest.json</code>.</p><div class="shot-grid sources-gallery"><img src="assets/media/steam-screenshot-00.jpg" width="600" height="338" loading="lazy" alt="Sil's room in Garden of Witches"><img src="assets/media/steam-screenshot-03.jpg" width="600" height="338" loading="lazy" alt="Garden of Witches boss battle"><img src="assets/media/steam-screenshot-07.jpg" width="600" height="338" loading="lazy" alt="Garden of Witches illustrated story screen"></div><h2>Correction format</h2><pre class="template">Page URL:\nClaim to correct:\nGame version shown:\nScissors / Spell / Imprint / Relic:\nChapter and difficulty:\nScreenshot or uncut clip:</pre></div><aside class="toc"><b>Last checked</b><p>29 Aug 2026</p><b>Target version</b><p>1.0 full release</p></aside></article>'''
-privacy = '''<header class="page-hero"><p class="eyebrow">Site policy</p><h1>Privacy</h1><p>This static build does not create accounts or load advertising and analytics scripts.</p></header><article class="article-layout"><div class="prose"><h2>Current collection</h2><p>No form submits personal data to a server. This build stores no user profiles.</p><h2>Future ads and analytics</h2><p>Before advertising or analytics is enabled, the site must disclose providers, purposes, cookies, retention and opt-out controls and add consent handling where required.</p></div></article>'''
+analytics_privacy = ('''<h2>Optional analytics</h2><p>The Google Analytics library is not loaded unless a visitor selects “Allow analytics.” A visitor can clear this preference in the browser to be asked again. The site does not enable Google advertising storage.</p>''' if GA_MEASUREMENT_ID else '''<h2>Analytics status</h2><p>Google Analytics is not enabled in this build.</p>''')
+privacy = '''<header class="page-hero"><p class="eyebrow">Site policy</p><h1>Privacy</h1><p>This static site does not create accounts or require personal information.</p></header><article class="article-layout"><div class="prose"><h2>Current collection</h2><p>No form submits personal data to this site and no user profile is created. The hosting provider may process ordinary request information needed to deliver and secure the pages.</p>''' + analytics_privacy + '''<h2>Advertising</h2><p>Advertising is not enabled. Before ads are added, this page and the consent controls must be updated for the selected provider, purposes and applicable regional requirements.</p></div></article>'''
 retired = '''<header class="page-hero"><p class="eyebrow">Page retired</p><h1>The Build Record Card is no longer a primary guide</h1><p>Players need current build answers, not an empty form. Use the documented 1.0 build paths instead.</p></header><section class="section"><div class="choice-grid"><a href="../builds/broken-scissors-sharpness-build.html"><b>Broken Scissors</b><span>Sharpness build →</span></a><a href="../builds/magic-scissors-fireball-build.html"><b>Magic Scissors</b><span>Fireball build →</span></a></div></section>'''
 not_found = '''<header class="page-hero"><p class="eyebrow">404</p><h1>This path has left the Garden</h1><p>Use the player question index to find the current 1.0 guide.</p><a class="button primary" href="/wiki.html">Open the wiki</a></header>'''
 

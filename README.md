@@ -10,9 +10,12 @@ The source of truth is `scripts/generate.py`. Generated HTML, official media, SE
 python3 scripts/generate.py
 npm test
 npm run serve
+npm run build
 ```
 
 Open `http://127.0.0.1:4173` after starting the server.
+
+`npm run build` creates a clean `dist/` directory containing only public site files. For a production analytics build, set `GA_MEASUREMENT_ID=G-...`; `GOOGLE_SITE_VERIFICATION=...` can add the Search Console HTML verification meta tag when URL-prefix verification is preferred. Domain-property DNS verification is preferred for the live custom domain.
 
 ## Current beginner path
 

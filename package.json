@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "python3 scripts/generate.py && node scripts/prepare-deploy.mjs",
     "test": "node tests/verify.mjs",
     "serve": "node server.mjs"
   }

@@ -5,7 +5,8 @@
 - State: purchased (confirmed by the user on 2026-08-29)
 - Availability-check price: `$0.70` first year + `$0.20` ICANN fee
 - Availability-check renewal: `$31.05/year`
-- DNS: not connected to a host yet
+- Selected host: Cloudflare Pages Free (commercial static site, direct upload)
+- DNS: not connected to Cloudflare Pages yet
 - Site canonical base: `https://gardenofwitches.shop/`
 
-The next external change is to deploy the static site, then point Spaceship DNS at that hosting target.
+The next external change is to complete Cloudflare OAuth, deploy `dist/`, then connect the Spaceship-managed domain to the Pages project.
