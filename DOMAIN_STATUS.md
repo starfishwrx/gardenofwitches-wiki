@@ -7,7 +7,7 @@
 - Availability-check renewal: `$31.05/year`
 - Selected host: Cloudflare Pages Free (commercial static site, direct upload)
 - Pages project: `gardenofwitches-wiki`
-- Production deployment: `https://721e91eb.gardenofwitches-wiki.pages.dev`
+- Production deployment: `https://955af55a.gardenofwitches-wiki.pages.dev`
 - Stable Pages hostname: `https://gardenofwitches-wiki.pages.dev`
 - Cloudflare custom-domain association: `www.gardenofwitches.shop` is live over HTTPS and points to Pages
 - Apex routing: `gardenofwitches.shop` permanently redirects to `https://www.gardenofwitches.shop`; HTTPS redirect verified
