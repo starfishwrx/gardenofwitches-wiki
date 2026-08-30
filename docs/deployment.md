@@ -36,7 +36,7 @@ The external Google Analytics library is not loaded until the visitor accepts th
 
 ## Current external blockers
 
-- Cloudflare OAuth is awaiting account sign-in.
-- The Pages project and production URL have not been created yet.
-- The custom domain still uses Spaceship DNS and has not been pointed to Pages.
+- Cloudflare Pages is live at `https://gardenofwitches-wiki.pages.dev`.
+- Cloudflare custom-domain associations exist for the apex and `www` hostnames, but DNS validation is pending.
+- The domain still uses Spaceship DNS and its parking record has not been replaced with the Pages targets.
 - Search Console and GA4 properties require the user's Google account session.
