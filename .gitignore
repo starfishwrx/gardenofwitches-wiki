@@ -3,4 +3,5 @@ node_modules/
 output/
 dist/
 .playwright-cli/
+.wrangler/
 __pycache__/
