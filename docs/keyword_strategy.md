@@ -12,7 +12,7 @@ The local `findnewword` tool combines Google suggestion harvesting with Google T
 4. Earn search traffic by answering the first questions real users ask.
 5. Add advertising only after the site has useful sessions and compliant privacy controls.
 
-Garden of Witches entered version 1.0 on 2026-08-28. The exact-match competitor `gardenofwitches.wiki` was already live when this project was reviewed. Our domain is `gardenofwitches.shop`.
+Garden of Witches entered version 1.0 on 2026-08-28. The exact-match competitor `gardenofwitches.wiki` was already live when this project was reviewed. Our canonical domain is `www.gardenofwitches.shop`.
 
 ## Competitive gap
 

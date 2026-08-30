@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /guides/build-record-card.html
 
-Sitemap: https://gardenofwitches.shop/sitemap.xml
+Sitemap: https://www.gardenofwitches.shop/sitemap.xml

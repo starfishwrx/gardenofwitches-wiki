@@ -5,11 +5,13 @@ import os
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-DOMAIN = "https://gardenofwitches.shop"
+DOMAIN = "https://www.gardenofwitches.shop"
 UPDATED = "2026-08-30"
 UPDATED_DISPLAY = "30 Aug 2026"
 OG_IMAGE = f"{DOMAIN}/assets/media/official-header.jpg"
-GA_MEASUREMENT_ID = os.environ.get("GA_MEASUREMENT_ID", "").strip()
+# GA4 measurement IDs are public site configuration, not secrets. Keep the
+# production ID as the rebuild default while allowing previews to override it.
+GA_MEASUREMENT_ID = os.environ.get("GA_MEASUREMENT_ID", "G-MQYLZVS5B1").strip()
 GOOGLE_SITE_VERIFICATION = os.environ.get("GOOGLE_SITE_VERIFICATION", "").strip()
 
 if GA_MEASUREMENT_ID and not re.fullmatch(r"G-[A-Z0-9]+", GA_MEASUREMENT_ID):

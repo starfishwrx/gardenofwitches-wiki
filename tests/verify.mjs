@@ -34,7 +34,7 @@ const textOnly=s=>decode(s.replace(/<script.*?<\/script>|<style.*?<\/style>/gs,'
 const schemasByFile=new Map();
 for(const f of files.filter(f=>f.endsWith('.html'))){
  const s=await readFile(f,'utf8');const r=relative(root,f).replaceAll('\\','/');
- for(const token of ['<title>','<meta name="description"','<link rel="canonical" href="https://gardenofwitches.shop/','<meta property="og:image"','application/ld+json'])if(!s.includes(token))throw new Error(`${token} missing: ${r}`);
+ for(const token of ['<title>','<meta name="description"','<link rel="canonical" href="https://www.gardenofwitches.shop/','<meta property="og:image"','application/ld+json'])if(!s.includes(token))throw new Error(`${token} missing: ${r}`);
  const schemas=[...s.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(m=>JSON.parse(m[1]));schemasByFile.set(r,schemas);
  for(const m of s.matchAll(/<img\s+[^>]*>/g)){const tag=m[0];if(!/\salt="[^"]*"/.test(tag))throw new Error(`image alt missing: ${r}`);if(!/\swidth="\d+"/.test(tag)||!/\sheight="\d+"/.test(tag))throw new Error(`image dimensions missing: ${r}`);const src=tag.match(/\ssrc="([^"]+)"/)?.[1];if(!src)throw new Error(`image src missing: ${r}`);if(!/^(https?:|\/)/.test(src)){const target=resolve(dirname(f),src);if(!rel.includes(relative(root,target).replaceAll('\\','/')))throw new Error(`local image missing: ${r} -> ${src}`)}}
  for(const m of s.matchAll(/<(?:source)[^>]*\ssrc="([^"]+)"/g)){const src=m[1];const target=resolve(dirname(f),src);if(!rel.includes(relative(root,target).replaceAll('\\','/')))throw new Error(`local media missing: ${r} -> ${src}`)}
@@ -54,8 +54,11 @@ for(const r of core){
 }
 const siteText=(await Promise.all(indexable.map(f=>readFile(join(root,f),'utf8')))).join('\n').toLowerCase();
 for(const forbidden of ['capture queue','3 attacks per second'])if(siteText.includes(forbidden))throw new Error(`unsupported public phrase remains: ${forbidden}`);
-if((await readFile(join(root,'index.html'),'utf8')).includes('Build Record Card'))throw new Error('retired Build Record Card remains on home');
-const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');for(const f of indexable){const url=f==='index.html'?'https://gardenofwitches.shop/':`https://gardenofwitches.shop/${f}`;if(!sitemap.includes(url))throw new Error(`sitemap missing ${url}`)}if(sitemap.includes('build-record-card'))throw new Error('retired page remains in sitemap');
+const homeHtml=await readFile(join(root,'index.html'),'utf8');
+for(const token of ["window.GA_MEASUREMENT_ID='G-MQYLZVS5B1'","analytics_storage:'denied'",'class="analytics-consent"'])if(!homeHtml.includes(token))throw new Error(`consent-first analytics token missing: ${token}`);
+if(homeHtml.includes('googletagmanager.com/gtag/js'))throw new Error('Google Analytics library must not load before consent');
+if(homeHtml.includes('Build Record Card'))throw new Error('retired Build Record Card remains on home');
+const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');for(const f of indexable){const url=f==='index.html'?'https://www.gardenofwitches.shop/':`https://www.gardenofwitches.shop/${f}`;if(!sitemap.includes(url))throw new Error(`sitemap missing ${url}`)}if(sitemap.includes('build-record-card'))throw new Error('retired page remains in sitemap');
 const llms=await readFile(join(root,'llms.txt'),'utf8');for(const term of ['Broken Scissors Sharpness','Magic Scissors + Fireball','Attribute, Synergy and Rune','Challenge Mode','Chapters 1–5'])if(!llms.includes(term))throw new Error(`llms.txt missing ${term}`);
 const server=await readFile(join(root,'server.mjs'),'utf8');for(const mime of ["'.jpg':'image/jpeg'","'.avif':'image/avif'","'.mp4':'video/mp4'"])if(!server.includes(mime))throw new Error(`server MIME missing ${mime}`);
 const manifest=JSON.parse(await readFile(join(root,'assets/media/source-manifest.json'),'utf8'));const mediaFiles=rel.filter(f=>f.startsWith('assets/media/')&&!f.endsWith('source-manifest.json'));if(manifest.items.length!==mediaFiles.length)throw new Error(`media manifest count ${manifest.items.length} != files ${mediaFiles.length}`);for(const item of manifest.items){if(!item.source_url.startsWith('https://'))throw new Error(`source URL missing for ${item.file}`);const data=await readFile(join(root,'assets/media',item.file));const hash=createHash('sha256').update(data).digest('hex');if(hash!==item.sha256)throw new Error(`media hash mismatch ${item.file}`)}
