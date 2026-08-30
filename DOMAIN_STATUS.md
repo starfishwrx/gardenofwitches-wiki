@@ -15,6 +15,6 @@
 - Authoritative DNS: Spaceship (`launch1.spaceship.net`, `launch2.spaceship.net`)
 - DNS: `www` CNAME targets `gardenofwitches-wiki.pages.dev`; apex TXT keeps Search Console verification; apex URL redirect is configured at the registrar
 - Site canonical base: `https://www.gardenofwitches.shop/`
-- Google Analytics: GA4 web stream created with consent-first loading; public measurement ID `G-MQYLZVS5B1`
+- Google Analytics: GA4 web stream created with consent-first loading; public measurement ID `G-MQYLZVS5B1`; linked to the Search Console Domain property
 
 The remaining external check is first GA4 data receipt after a real visitor chooses “Allow analytics.”

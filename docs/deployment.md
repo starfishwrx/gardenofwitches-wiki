@@ -40,4 +40,4 @@ The external Google Analytics library is not loaded until the visitor accepts th
 - `www.gardenofwitches.shop` points to Pages and serves the production site over HTTPS.
 - The apex hostname uses a verified registrar-level permanent redirect to `https://www.gardenofwitches.shop`.
 - The Search Console Domain property is verified by DNS TXT record; the sitemap was accepted with 16 discovered pages and the homepage has an indexing request.
-- The GA4 property and web stream are created; the production build uses consent-first loading.
+- The GA4 property and web stream are created and linked to the Search Console Domain property; the production build uses consent-first loading.
