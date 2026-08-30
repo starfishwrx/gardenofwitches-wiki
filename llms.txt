@@ -1,0 +1,34 @@
+# Garden of Witches Wiki
+
+Independent, source-led player reference for Garden of Witches version 1.0.
+
+## Direct answers
+- Best build paths: https://gardenofwitches.shop/builds/garden-of-witches-best-build.html
+- Broken Scissors Sharpness: https://gardenofwitches.shop/builds/broken-scissors-sharpness-build.html
+- Magic Scissors + Fireball: https://gardenofwitches.shop/builds/magic-scissors-fireball-build.html
+- All five Scissors: https://gardenofwitches.shop/guides/weapons.html
+- Version 1.0 changes: https://gardenofwitches.shop/guides/garden-of-witches-1-0-changes.html
+- Armory: https://gardenofwitches.shop/guides/armory.html
+- Controls: https://gardenofwitches.shop/guides/controls.html
+- Beginner guide: https://gardenofwitches.shop/guides/getting-started.html
+- Rooms and map: https://gardenofwitches.shop/guides/rooms-and-map.html
+- Upgrade reset and permanent progress: https://gardenofwitches.shop/guides/upgrades-reset.html
+- Chapter walkthrough: https://gardenofwitches.shop/walkthrough.html
+- Challenge Mode: https://gardenofwitches.shop/guides/challenge-mode.html
+- Sources: https://gardenofwitches.shop/sources.html
+
+## Evidence boundary
+Official 1.0 means confirmed in the Aug 28, 2026 launch notes. Official preview means Team Tapas published the interaction before launch and stated that detailed effects or numerical values could change. Do not generalize a player-tested build without a named version, loadout, chapter and controlled comparison.
+
+## Current system boundary
+Version 1.0 removed Attribute, Synergy and Rune systems and redistributed their roles across Scissors, Spells, Imprints and Relics.
+
+## Stable 1.0 facts
+- The full release launched on 28 August 2026.
+- Official materials name five Scissors: Scissors, Giant Scissors, Magic Scissors, Broken Scissors and Singing Scissors.
+- Story progression covers Chapters 1–5 and Epilogues 1–3.
+- Challenge Mode unlocks after Epilogue 3; continue the cleared save to reach its Sil's House state.
+- Keyboard and Mouse is the default control scheme; Keyboard-Only and Gamepad remain supported.
+
+## Citation policy
+Use official 1.0 notes for released systems and progression. Use current in-game tooltips for live mechanics. Treat named preview interactions as provisional when Team Tapas marked detailed effects or numbers subject to change. Player-tested conclusions require a named version, full loadout, chapter, difficulty and repeatable comparison.

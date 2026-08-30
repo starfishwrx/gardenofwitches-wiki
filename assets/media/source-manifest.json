@@ -1,0 +1,265 @@
+{
+  "policy": "Official media cached locally for identification, commentary and game-guide context; no ownership claimed.",
+  "items": [
+    {
+      "file": "blue-chakram.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/120134fbc00ff12e1f87c087db6d70829baf5fef.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "bf75f68bd8068b47b66e46e199e851564f5370e15c059734033362005f3ea564",
+      "bytes": 5701
+    },
+    {
+      "file": "broken-scissors-demo-poster.webp",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/c55965d69b4d99ae9367cedd4e67d759f13f9f8c.gif",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": true,
+      "sha256": "24f087f5ed5298f06bfea45878172a1451da056826415d420d7dbe097189424b",
+      "bytes": 17794
+    },
+    {
+      "file": "broken-scissors-demo.mp4",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/c55965d69b4d99ae9367cedd4e67d759f13f9f8c.gif",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": true,
+      "sha256": "41ff86c96b8d21ba91fbd2fbd562184d89ccc6d7645a07668d289d36d28da9a9",
+      "bytes": 105269
+    },
+    {
+      "file": "cats-eye-ring.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/eb3d6f9bf3f155c20999c0bd8c5e0b3cfd16b167.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "28bfc7a26e662e942834637107de0a02f60f5dbaf402dfc45ea15d80af4daadb",
+      "bytes": 5439
+    },
+    {
+      "file": "downpour-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/736036bdeed0bff358d4138707f291e34c588fd2.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "0344503db1e51f6466b6d65a0cc7fa1f6287bfb4a5525f642f15a3daee5496cd",
+      "bytes": 7313
+    },
+    {
+      "file": "fragment-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/acfdc343c85c19cd82ddc2528ce9c4d79360ece9.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "f98d5b937834d36aad002299b1bbbc371879a77b71cc1404b56a61b172ea50c1",
+      "bytes": 7321
+    },
+    {
+      "file": "frenzy-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/74bc3281d7b9338e2e026c8bc9768382e694ddd2.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "c0e5aad253777b46d4e7657bc6d7324515f3f691bf739085fedeab513a4e0655",
+      "bytes": 5809
+    },
+    {
+      "file": "hunger-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/e8b520ed992e2a6f20ea0a057a3ceb13043bb804.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "4fe517b9f0b8d56968bdaeec3a51014538ddcac87ccf368ef990cff5906eab04",
+      "bytes": 4206
+    },
+    {
+      "file": "magic-scissors-demo-poster.webp",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/ef5b6ed5b2bcf9bcb58ccdc5d105306bc45327e5.gif",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": true,
+      "sha256": "a10572ec0c6f9f43442f56d82dc3cb46d8385bd89f310d8eea7f91446b3d5431",
+      "bytes": 14168
+    },
+    {
+      "file": "magic-scissors-demo.mp4",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/ef5b6ed5b2bcf9bcb58ccdc5d105306bc45327e5.gif",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": true,
+      "sha256": "519295e194cc41044554b5679a254797dcede9f6c3f1510dc96be618aeebe3d5",
+      "bytes": 147914
+    },
+    {
+      "file": "official-1-0-combat.avif",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/extras/9bc7c899222fc6f77295594f782a3d81.avif?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "cd8419a0a7d73cc6058d5acbb67bba21d6840ebf8ca7ad70ac3cb05fd5d5891e",
+      "bytes": 29589
+    },
+    {
+      "file": "official-about-game.avif",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/extras/a7d604413d74ce7a30e385627eb4c04d.avif?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "c2352b3cc9bce47c53fe5178cc87abf0c5f206562f0ee651e1d4ce054540fc08",
+      "bytes": 110899
+    },
+    {
+      "file": "official-achievements.avif",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/extras/b1998c5163af074fede7aab50a63f1c8.avif?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "ebf4ba081524ac35f6b0d1f50c3af0c83a770250ad124dd2f9a6004e64e9224f",
+      "bytes": 63380
+    },
+    {
+      "file": "official-challenge-mode.avif",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/extras/6c0da1e9b18635ac380d841f0b261931.avif?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "3074ec46ed13829551204cddd17bd70ad7cb34f1857797978edbd5771b3b23bd",
+      "bytes": 20259
+    },
+    {
+      "file": "official-header.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/dca6cc6022641ac768d68f899fa7d2a3c71215eb/header.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "065535d0b304452fcae75db7a3d92695edf0a981d9607f9577577de6ddcfc021",
+      "bytes": 55088
+    },
+    {
+      "file": "rapid-fire-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/e9f78c112e791989f91ca2a22d9f9eed196fb12d.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "e3f970dd509e70b087f4e9cf901fbf642f05b255191e78ce540c939d1b8c892f",
+      "bytes": 5696
+    },
+    {
+      "file": "steam-screenshot-00.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/f5f8b303cae3ac4c9f91e1b59f8a9c8787745641/ss_f5f8b303cae3ac4c9f91e1b59f8a9c8787745641.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "0cfa5febadee7e3ba63289ba7a9a9737b58f8978b5fb45f28cce05e5c09e5d90",
+      "bytes": 44451
+    },
+    {
+      "file": "steam-screenshot-01.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/f6614cb91a866d12e4ef3f3688331aa80e810d3f/ss_f6614cb91a866d12e4ef3f3688331aa80e810d3f.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "f6367595a0b6166320ce8f10d8c7257107715aa678e132cf6e76aa9c2d1421d8",
+      "bytes": 80325
+    },
+    {
+      "file": "steam-screenshot-02.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/ccbd187f22dbf9754c5e252356515560a045a79f/ss_ccbd187f22dbf9754c5e252356515560a045a79f.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "76e15c15eda5e43afd6aa637a26aa0ab7401679d67c5b2cf0678006f3b8bb796",
+      "bytes": 45149
+    },
+    {
+      "file": "steam-screenshot-03.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/f017adb99dc1e260daa7027f8da0f9cd18f5eb1a/ss_f017adb99dc1e260daa7027f8da0f9cd18f5eb1a.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "8368474fb41ecb47da7a29e6240f84c5dd7e710539f8092de47b5cec8484dfd7",
+      "bytes": 79287
+    },
+    {
+      "file": "steam-screenshot-04.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/e9bd834f505e1519fe2253e2ff0ccf93f48cd5e8/ss_e9bd834f505e1519fe2253e2ff0ccf93f48cd5e8.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "c8e67b0188fd1ad3553e93b5851d4011e4d158257252145e74a7684b1a558147",
+      "bytes": 92296
+    },
+    {
+      "file": "steam-screenshot-05.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/1497d38127f1d7ed98d01e1f6b3203d5090cacf5/ss_1497d38127f1d7ed98d01e1f6b3203d5090cacf5.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "8a043ccac4a68bf41dafeaecbf27c86ede30867b4effb4b4b4555c9173f073c3",
+      "bytes": 69598
+    },
+    {
+      "file": "steam-screenshot-06.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/9d9da91a1e48bd8e736cccb6dfd28581414dadde/ss_9d9da91a1e48bd8e736cccb6dfd28581414dadde.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "faa00f7fba23e0d5d65734f0149c757e65272c5e3e6e7a029530fb4be6ddb2bc",
+      "bytes": 26525
+    },
+    {
+      "file": "steam-screenshot-07.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/9d027acf69779a0cfab97a245b6dad189aacabd8/ss_9d027acf69779a0cfab97a245b6dad189aacabd8.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "a0d5e48eee70005499f21d76033ab0b18f0ddcc0e064d4b2fe8a50c68f29d032",
+      "bytes": 46020
+    },
+    {
+      "file": "steam-screenshot-08.jpg",
+      "source_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2530470/c1c2cfa568509b585e426183d32c8018aa5840aa/ss_c1c2cfa568509b585e426183d32c8018aa5840aa.600x338.jpg?t=1787907620",
+      "official_page": "https://store.steampowered.com/app/2530470/Garden_of_Witches/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "cf9df821c14c41a6cb50ce06a9d34749cce7d56af92516f898ec66911294f05b",
+      "bytes": 66966
+    },
+    {
+      "file": "threading-imprint.png",
+      "source_url": "https://clan.fastly.steamstatic.com/images/45149819/a555c90410caed18d16c6a8af30acb39b333d875.png",
+      "official_page": "https://steamcommunity.com/app/2530470/allnews/",
+      "rights": "© Team Tapas, Ltd. All rights reserved.",
+      "retrieved": "2026-08-29",
+      "derived": false,
+      "sha256": "bff2682d351ec5ab58bacdf0a1a09c06a59fb942d11e247571813277032bc4bf",
+      "bytes": 5766
+    }
+  ]
+}

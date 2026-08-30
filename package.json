@@ -1,0 +1,10 @@
+{
+  "name": "gardenofwitches-wiki",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/verify.mjs",
+    "serve": "node server.mjs"
+  }
+}
