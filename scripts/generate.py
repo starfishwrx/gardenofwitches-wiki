@@ -2,12 +2,13 @@ from pathlib import Path
 import html
 import json
 import os
+import posixpath
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = "https://www.gardenofwitches.shop"
-UPDATED = "2026-08-30"
-UPDATED_DISPLAY = "30 Aug 2026"
+UPDATED = "2026-08-31"
+UPDATED_DISPLAY = "31 Aug 2026"
 OG_IMAGE = f"{DOMAIN}/assets/media/official-header.jpg"
 # GA4 measurement IDs are public site configuration, not secrets. Keep the
 # production ID as the rebuild default while allowing previews to override it.
@@ -29,12 +30,46 @@ gtag('consent','default',{{analytics_storage:'denied',ad_storage:'denied',ad_use
     CONSENT_BANNER = '''<section class="analytics-consent" aria-label="Analytics preference" hidden><p><strong>Optional analytics</strong><br>Help us understand which beginner guides are useful. Google Analytics stays off unless you accept.</p><div><button type="button" data-consent="denied">No thanks</button><button type="button" class="accept" data-consent="granted">Allow analytics</button></div></section>'''
 
 NAV = [
-    ("Beginner", "/guides/getting-started.html"),
-    ("Builds", "/builds/garden-of-witches-best-build.html"),
-    ("Weapons", "/guides/weapons.html"),
-    ("Walkthrough", "/walkthrough.html"),
-    ("Challenge", "/guides/challenge-mode.html"),
+    ("Beginner", "/guides/getting-started"),
+    ("Builds", "/builds/garden-of-witches-best-build"),
+    ("Weapons", "/guides/weapons"),
+    ("Walkthrough", "/walkthrough"),
+    ("Challenge", "/guides/challenge-mode"),
 ]
+
+
+def public_route(source_path):
+    """Map a checked-in HTML file to the extensionless URL Cloudflare serves."""
+    normalized = posixpath.normpath(source_path or "index.html").lstrip("./")
+    if normalized == "index.html":
+        return "/"
+    if normalized.endswith("/index.html"):
+        return f'/{normalized[:-len("index.html")]}'
+    if normalized.endswith(".html"):
+        normalized = normalized[:-5]
+    return f"/{normalized}"
+
+
+def canonical_url(source_path):
+    return f"{DOMAIN}{public_route(source_path)}"
+
+
+def clean_internal_html_links(body, source_path):
+    """Resolve authored .html hrefs and emit one root-absolute clean URL shape."""
+    source_dir = posixpath.dirname(source_path or "index.html")
+
+    def replace(match):
+        target = match.group(1)
+        if target.startswith(("http://", "https://", "mailto:", "tel:", "#", "javascript:")):
+            return match.group(0)
+        parts = re.match(r"([^?#]*)(.*)", target)
+        path_part, suffix = parts.group(1), parts.group(2)
+        if not path_part.endswith(".html"):
+            return match.group(0)
+        resolved = path_part.lstrip("/") if path_part.startswith("/") else posixpath.join(source_dir, path_part)
+        return f'href="{public_route(resolved)}{suffix}"'
+
+    return re.sub(r'href="([^"]+)"', replace, body)
 
 
 def faq_schema(items):
@@ -48,8 +83,9 @@ def page(path, seo_title, description, body, *, schema_type="Article", faqs=None
          source_state="Official 1.0", video=None):
     depth = path.count("/")
     root = "../" * depth
-    canonical = f"{DOMAIN}/{path}" if path else f"{DOMAIN}/"
-    nav = "".join(f'<a href="{root}{href.lstrip("/")}">{label}</a>' for label, href in NAV)
+    canonical = canonical_url(path)
+    body = clean_internal_html_links(body, path)
+    nav = "".join(f'<a href="{href}">{label}</a>' for label, href in NAV)
     image_url = og_image if og_image.startswith("http") else f"{DOMAIN}/{og_image}"
     schemas = [{
         "@context": "https://schema.org", "@type": schema_type, "headline": seo_title,
@@ -66,7 +102,7 @@ def page(path, seo_title, description, body, *, schema_type="Article", faqs=None
     if path:
         crumbs = [*crumbs, (seo_title, path)]
         schemas.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": i + 1, "name": label, "item": f"{DOMAIN}/{url}" if url else f"{DOMAIN}/"}
+            {"@type": "ListItem", "position": i + 1, "name": label, "item": canonical_url(url)}
             for i, (label, url) in enumerate(crumbs)]})
     if video:
         schemas.append({"@context": "https://schema.org", "@type": "VideoObject", **video})
@@ -75,7 +111,7 @@ def page(path, seo_title, description, body, *, schema_type="Article", faqs=None
     robots = '<meta name="robots" content="noindex,follow">' if noindex else '<meta name="robots" content="index,follow,max-image-preview:large">'
     full_title = seo_title
     breadcrumb_html = "" if not path else '<nav class="breadcrumbs" aria-label="Breadcrumb">' + ' <span>›</span> '.join(
-        f'<a href="{root}{url}">{html.escape(label)}</a>' if url else f'<a href="{root}index.html">{html.escape(label)}</a>'
+        f'<a href="{public_route(url)}">{html.escape(label)}</a>'
         for label, url in crumbs) + '</nav>'
     doc = f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -87,9 +123,9 @@ def page(path, seo_title, description, body, *, schema_type="Article", faqs=None
   <link rel="icon" href="{root}assets/mark.svg" type="image/svg+xml"><link rel="manifest" href="{root}site.webmanifest"><link rel="stylesheet" href="{root}assets/style.css">
   {''.join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in schemas)}{ANALYTICS_HEAD}<script src="{root}assets/site.js" defer></script>
 </head><body><a class="skip" href="#main">Skip to content</a><header class="site-header">
-  <a class="brand" href="{root}index.html"><img src="{root}assets/mark.svg" alt="" width="38" height="38"><span>Garden of Witches <b>Wiki</b></span></a>
+  <a class="brand" href="/"><img src="{root}assets/mark.svg" alt="" width="38" height="38"><span>Garden of Witches <b>Wiki</b></span></a>
   <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" aria-label="Primary">{nav}</nav></header>
-  <main id="main">{breadcrumb_html}{body}</main><footer><div><strong>Garden of Witches Wiki</strong><p>Independent player reference for the 1.0 release. Not affiliated with Team Tapas.</p></div><div><a href="{root}sources.html">Sources &amp; media credits</a><a href="{root}privacy.html">Privacy</a><span>Evidence: {html.escape(source_state)} · updated {UPDATED_DISPLAY}</span></div></footer>{CONSENT_BANNER}</body></html>'''
+  <main id="main">{breadcrumb_html}{body}</main><footer><div><strong>Garden of Witches Wiki</strong><p>Independent player reference for the 1.0 release. Not affiliated with Team Tapas.</p></div><div><a href="/sources">Sources &amp; media credits</a><a href="/privacy">Privacy</a><span>Evidence: {html.escape(source_state)} · updated {UPDATED_DISPLAY}</span></div></footer>{CONSENT_BANNER}</body></html>'''
     dest = ROOT / (path or "index.html")
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(doc, encoding="utf-8")
@@ -332,3 +368,23 @@ page("sources.html", "Sources & Media Credits", "Official sources, evidence labe
 page("privacy.html", "Privacy", "Privacy information for Garden of Witches Wiki.", privacy)
 page("guides/build-record-card.html", "Build Record Card Retired", "The old Build Record Card has been replaced by current Garden of Witches 1.0 build guides.", retired, noindex=True)
 page("404.html", "Page Not Found", "The requested Garden of Witches guide was not found.", not_found, noindex=True)
+
+INDEXABLE_PAGES = [
+    "", "wiki.html", "builds/garden-of-witches-best-build.html",
+    "builds/broken-scissors-sharpness-build.html",
+    "builds/magic-scissors-fireball-build.html", "guides/getting-started.html",
+    "guides/rooms-and-map.html", "guides/upgrades-reset.html", "guides/weapons.html",
+    "guides/garden-of-witches-1-0-changes.html", "guides/armory.html",
+    "guides/controls.html", "guides/challenge-mode.html", "walkthrough.html",
+    "sources.html", "privacy.html",
+]
+sitemap_entries = "\n".join(
+    f"  <url><loc>{canonical_url(source_path)}</loc><lastmod>{UPDATED}</lastmod></url>"
+    for source_path in INDEXABLE_PAGES
+)
+(ROOT / "sitemap.xml").write_text(
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    f'{sitemap_entries}\n</urlset>\n',
+    encoding="utf-8",
+)

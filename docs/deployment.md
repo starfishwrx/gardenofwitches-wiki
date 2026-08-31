@@ -41,3 +41,10 @@ The external Google Analytics library is not loaded until the visitor accepts th
 - The apex hostname uses a verified registrar-level permanent redirect to `https://www.gardenofwitches.shop`.
 - The Search Console Domain property is verified by DNS TXT record; the sitemap was accepted with 16 discovered pages and the homepage has an indexing request.
 - The GA4 property and web stream are created and linked to the Search Console Domain property; the production build uses consent-first loading.
+
+## Canonical URL policy (2026-08-31)
+
+- Publish and submit only extensionless URLs, for example `https://www.gardenofwitches.shop/guides/weapons`.
+- Cloudflare Pages serves the checked-in `guides/weapons.html` file at that clean URL and redirects the `.html` request to it.
+- Canonical, Open Graph URL, structured-data URL, internal links, `sitemap.xml`, and `llms.txt` must all use the same extensionless `www` URL.
+- The registrar redirect for the apex domain must preserve the complete request path and query when forwarding to `www`. Verify a deep URL after every domain-forwarding change.

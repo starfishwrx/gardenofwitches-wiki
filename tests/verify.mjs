@@ -29,6 +29,9 @@ const expectedTitles={
 };
 const required=[...indexable,'guides/build-record-card.html','404.html','robots.txt','sitemap.xml','llms.txt','site.webmanifest','assets/media/source-manifest.json'];
 for(const f of required)if(!rel.includes(f))throw new Error(`missing ${f}`);
+const publicRoute=f=>f==='index.html'?'/':`/${f.replace(/\.html$/,'')}`;
+const sourceHtml=rel.filter(f=>f.endsWith('.html')&&!f.startsWith('dist/'));
+const routeToFile=new Map(sourceHtml.map(f=>[publicRoute(f),f]));
 const decode=s=>s.replaceAll('&amp;','&').replaceAll('&#x27;',"'").replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&#39;',"'");
 const textOnly=s=>decode(s.replace(/<script.*?<\/script>|<style.*?<\/style>/gs,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim());
 const schemasByFile=new Map();
@@ -36,10 +39,11 @@ for(const f of files.filter(f=>f.endsWith('.html'))){
  const s=await readFile(f,'utf8');const r=relative(root,f).replaceAll('\\','/');
  for(const token of ['<title>','<meta name="description"','<link rel="canonical" href="https://www.gardenofwitches.shop/','<meta property="og:image"','application/ld+json'])if(!s.includes(token))throw new Error(`${token} missing: ${r}`);
  const schemas=[...s.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map(m=>JSON.parse(m[1]));schemasByFile.set(r,schemas);
+ if(!r.startsWith('dist/')){const expected=`https://www.gardenofwitches.shop${publicRoute(r)}`;const canonical=s.match(/<link rel="canonical" href="([^"]+)">/)?.[1];const ogUrl=s.match(/<meta property="og:url" content="([^"]+)">/)?.[1];if(canonical!==expected)throw new Error(`canonical mismatch ${r}: ${canonical} != ${expected}`);if(ogUrl!==expected)throw new Error(`OG URL mismatch ${r}: ${ogUrl} != ${expected}`);if(JSON.stringify(schemas).includes('.html'))throw new Error(`schema URL contains .html: ${r}`)}
  for(const m of s.matchAll(/<img\s+[^>]*>/g)){const tag=m[0];if(!/\salt="[^"]*"/.test(tag))throw new Error(`image alt missing: ${r}`);if(!/\swidth="\d+"/.test(tag)||!/\sheight="\d+"/.test(tag))throw new Error(`image dimensions missing: ${r}`);const src=tag.match(/\ssrc="([^"]+)"/)?.[1];if(!src)throw new Error(`image src missing: ${r}`);if(!/^(https?:|\/)/.test(src)){const target=resolve(dirname(f),src);if(!rel.includes(relative(root,target).replaceAll('\\','/')))throw new Error(`local image missing: ${r} -> ${src}`)}}
  for(const m of s.matchAll(/<(?:source)[^>]*\ssrc="([^"]+)"/g)){const src=m[1];const target=resolve(dirname(f),src);if(!rel.includes(relative(root,target).replaceAll('\\','/')))throw new Error(`local media missing: ${r} -> ${src}`)}
  if(indexable.includes(r)&&s.includes('noindex'))throw new Error(`indexable page is noindex: ${r}`);
- for(const m of s.matchAll(/\shref="([^"]+)"/g)){const href=m[1];if(/^(https?:|mailto:|#|javascript:)/.test(href))continue;const clean=href.split(/[?#]/)[0];if(!clean)continue;const target=clean.startsWith('/')?resolve(root,clean.slice(1)):resolve(dirname(f),clean);const tr=relative(root,target).replaceAll('\\','/');if(!rel.includes(tr))throw new Error(`internal link missing: ${r} -> ${href}`)}
+ for(const m of s.matchAll(/\shref="([^"]+)"/g)){const href=m[1];if(/^(https?:|mailto:|tel:|#|javascript:)/.test(href))continue;const clean=href.split(/[?#]/)[0];if(!clean)continue;if(clean.endsWith('.html'))throw new Error(`internal link is not clean: ${r} -> ${href}`);if(clean.startsWith('/')&&routeToFile.has(clean))continue;const target=clean.startsWith('/')?resolve(root,clean.slice(1)):resolve(dirname(f),clean);const tr=relative(root,target).replaceAll('\\','/');if(!rel.includes(tr))throw new Error(`internal link missing: ${r} -> ${href}`)}
 }
 for(const r of core){
  const s=await readFile(join(root,r),'utf8');
@@ -58,7 +62,7 @@ const homeHtml=await readFile(join(root,'index.html'),'utf8');
 for(const token of ["window.GA_MEASUREMENT_ID='G-MQYLZVS5B1'","analytics_storage:'denied'",'class="analytics-consent"'])if(!homeHtml.includes(token))throw new Error(`consent-first analytics token missing: ${token}`);
 if(homeHtml.includes('googletagmanager.com/gtag/js'))throw new Error('Google Analytics library must not load before consent');
 if(homeHtml.includes('Build Record Card'))throw new Error('retired Build Record Card remains on home');
-const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');for(const f of indexable){const url=f==='index.html'?'https://www.gardenofwitches.shop/':`https://www.gardenofwitches.shop/${f}`;if(!sitemap.includes(url))throw new Error(`sitemap missing ${url}`)}if(sitemap.includes('build-record-card'))throw new Error('retired page remains in sitemap');
+const sitemap=await readFile(join(root,'sitemap.xml'),'utf8');for(const f of indexable){const url=`https://www.gardenofwitches.shop${publicRoute(f)}`;if(!sitemap.includes(`<loc>${url}</loc>`))throw new Error(`sitemap missing ${url}`)}if(sitemap.includes('.html'))throw new Error('sitemap contains redirected .html URLs');if(sitemap.includes('build-record-card'))throw new Error('retired page remains in sitemap');
 const llms=await readFile(join(root,'llms.txt'),'utf8');for(const term of ['Broken Scissors Sharpness','Magic Scissors + Fireball','Attribute, Synergy and Rune','Challenge Mode','Chapters 1–5'])if(!llms.includes(term))throw new Error(`llms.txt missing ${term}`);
 const server=await readFile(join(root,'server.mjs'),'utf8');for(const mime of ["'.jpg':'image/jpeg'","'.avif':'image/avif'","'.mp4':'video/mp4'"])if(!server.includes(mime))throw new Error(`server MIME missing ${mime}`);
 const manifest=JSON.parse(await readFile(join(root,'assets/media/source-manifest.json'),'utf8'));const mediaFiles=rel.filter(f=>f.startsWith('assets/media/')&&!f.endsWith('source-manifest.json'));if(manifest.items.length!==mediaFiles.length)throw new Error(`media manifest count ${manifest.items.length} != files ${mediaFiles.length}`);for(const item of manifest.items){if(!item.source_url.startsWith('https://'))throw new Error(`source URL missing for ${item.file}`);const data=await readFile(join(root,'assets/media',item.file));const hash=createHash('sha256').update(data).digest('hex');if(hash!==item.sha256)throw new Error(`media hash mismatch ${item.file}`)}
